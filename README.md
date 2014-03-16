@@ -57,7 +57,7 @@ Live bot:
 
 If you are running the test bot version, make sure you have the appropriate .csv file from **BitcoinCharts historical price data** above. In order to function with **fast-cpp-csv-parser**, the first line of the .csv file must be as follows:
 
-```time,price,volume```
+``time,price,volume``
 
 
 ## Author's comments
