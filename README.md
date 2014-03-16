@@ -7,16 +7,14 @@ Bitrecal runs in the command line. No user interaction is required after startin
 
 ## Exploring
 
-The source for Bitrecal is found under ```src/```.
-
-```./```
+``src/``
 
 * ```tradebot.hpp``` - Contains both TradeBot and TradeBotTest skeletons.
 * ```tradebot.cpp``` - Contains the code that decides on orders to place.
 * ```main.cpp``` - Initializes either the TradeBot or TradeBotTest, depending on the ```NDEBUG``` #define.
 
 
-```indicators/```
+``src/indicators/``
 
 * ```indicator.hpp``` - Declares an abstract base class that all indicators inherit. Also declares helper functions and the ```TimePeriods``` enum.
 * ```indicator.cpp``` - Defines everything declared in ```indicator.hpp```
