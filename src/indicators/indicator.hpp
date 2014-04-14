@@ -30,6 +30,7 @@ public:
 
     virtual void tick(unsigned int time, float price) = 0;
     virtual float get() = 0;
+    virtual float index() = 0;
 protected:
     const unsigned int candlesPerPeriod;
     const TimePeriods period;

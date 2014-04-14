@@ -10,9 +10,12 @@ public:
 
 	virtual void tick(unsigned int time, float price);
 	virtual float get();
+	virtual float index();
 private:
 	float ema;
 	float lastEma;
+
+	float currentPrice;
 };
 
 #endif

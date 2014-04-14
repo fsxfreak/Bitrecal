@@ -1,5 +1,6 @@
 #include "ema.hpp"
 #include <iostream>
+#include <cmath>
 
 EMA::EMA(int candlesPerPeriod, TimePeriods period)
 	: Indicator(candlesPerPeriod, period)
@@ -7,6 +8,8 @@ EMA::EMA(int candlesPerPeriod, TimePeriods period)
 
 void EMA::tick(unsigned int time, float price)
 {
+	currentPrice = price;
+
 	if (time > nextCandleTime)
 	{
 		nextCandleTime = calculateNextCandleTime(nextCandleTime, period);
@@ -46,3 +49,24 @@ void EMA::tick(unsigned int time, float price)
 }
 
 float EMA::get() { return ema; }
+
+float EMA::index() 
+{
+	//expand or contract based on volatility
+	const float MAX_DIFFERENCE_THRESHOLD = 40;
+
+	float priceDifference = ema - currentPrice;
+
+	priceDifference = priceDifference > MAX_DIFFERENCE_THRESHOLD 
+		? MAX_DIFFERENCE_THRESHOLD 
+		: priceDifference;
+	priceDifference = priceDifference < -MAX_DIFFERENCE_THRESHOLD
+		? -MAX_DIFFERENCE_THRESHOLD
+		: priceDifference;
+
+	float index = priceDifference / MAX_DIFFERENCE_THRESHOLD;
+	int sign = index > 0 ? 1 : -1;
+	index = pow(index, 2) * sign;
+
+	return index;
+}

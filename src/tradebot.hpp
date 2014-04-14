@@ -31,6 +31,8 @@ public:
     void tick();
 
 private:
+    const int NUM_INDICATORS = 1;
+
     int transactionIndex;
     std::vector<Transaction>* const transactions;
 
@@ -38,6 +40,19 @@ private:
     RSI rsi;
 
     float lastRSI;
+    float index;
+    float lastIndex;
+
+    bool waitingToBuy;
+    bool waitingToSell;
+
+    void decide();
+    float changeInIndex();
+
+    float fiat;
+    float coin;
+    float buy(float amount);
+    float sell(float amount);
 };
 #endif  //NDEBUG
 

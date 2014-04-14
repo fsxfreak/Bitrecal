@@ -1,5 +1,6 @@
 #include "rsi.hpp"
 #include <iostream>
+#include <cmath>
 
 //All times in seconds, timeNow is unix time
 RSI::RSI(int candlesPerPeriod, TimePeriods period)
@@ -54,29 +55,30 @@ void RSI::tick(unsigned int time, float price)
         }
 
         float difference = price - lastPrice;
-//                std::cout << "\t\t\t\t\t\tdifference:" << difference << std::endl;
         float gain = difference > 0 ? difference : 0;
-//                std::cout << "\t\t\t\t\tgain:" << gain << std::endl;
         float loss = difference < 0 ? -difference : 0;
-//                std::cout << "\t\t\t\tloss: " << loss << std::endl;
 
         float avgGain = ((lastAvgGain * (candlesPerPeriod - 1.f)) + gain) 
                                     / candlesPerPeriod;
-//                std::cout << "\t\t\tavgGain:" << avgGain << std::endl;
         float avgLoss = ((lastAvgLoss * (candlesPerPeriod - 1.f)) + loss) 
                                     / candlesPerPeriod;
-//                std::cout << "\t\tavgLoss:" << avgLoss << std::endl;
 
         lastPrice = price;
         lastAvgGain = avgGain;
         lastAvgLoss = avgLoss;
 
         float RS = avgGain / avgLoss;
-//                std::cout << "\tRS:" << RS << std::endl;
         rsi = 100.f - (100.f / (1.f + RS));
-//                std::cout << "RSI:" << rsi << std::endl;
-
     }
 }
 
 float RSI::get() { return rsi; }
+
+float RSI::index()
+{
+    float difference = 50 - rsi;
+    float index = difference / 50;
+    index = cbrt(index);
+
+    return index;
+}
